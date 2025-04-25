@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>김땡땡님의 이야기</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      background: url('https://images.unsplash.com/photo-1509228627152-72ae9ae6848b') no-repeat center center fixed;
+      background-size: cover;
+      padding: 30px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .info {
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    .highlight {
+      font-weight: bold;
+    }
+    .quote {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #eef7ee;
+      border-left: 4px solid #4CAF50;
+      font-style: italic;
+    }
+    .button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 1em;
+      border-radius: 6px;
+    }
+    .input-area, .message-list {
+      margin-top: 30px;
+    }
+    textarea, input[type="text"] {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    textarea {
+      height: 120px;
+    }
+    .message {
+      background: #e8f5e9;
+      padding: 12px;
+      border-radius: 5px;
+      margin-bottom: 12px;
+      border-left: 4px solid #66bb6a;
+    }
+    .timestamp {
+      display: block;
+      font-size: 0.8em;
+      color: #555;
+      margin-top: 4px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+<div style="text-align:center; margin-bottom: 20px;">
+  <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="희생자 일러스트" style="width: 120px; border-radius: 50%;">
+</div>
+    <h1>김땡땡님의 이야기</h1>
+    <div class="info">
+      <p><span class="highlight">이름:</span> 김땡땡</p>
+      <p><span class="highlight">생년월일:</span> 1996년 5월 17일</p>
+      <p><span class="highlight">당시 나이:</span> 27세</p>
+      <p><span class="highlight">사건:</span> ○○○○ 사고로 안타깝게 세상을 떠났습니다.</p>
+      <p><span class="highlight">소개:</span> 누구보다 따뜻했던 마음으로, 친구들을 항상 먼저 챙기던 사람이었습니다.</p>
+    </div>
+    <div class="quote">
+      "우리는 김땡땡님을 기억하며, 그 따뜻함을 이 숲에 함께 남깁니다."
+    </div>
+    <a class="button" onclick="showForm()">이야기 남기기</a>
+    <a class="button" onclick="showMessages()">방명록 보기</a>
+
+    <div id="inputArea" class="input-area hidden">
+      <input type="text" id="nicknameInput" placeholder="닉네임을 입력해주세요">
+      <textarea id="messageInput" placeholder="짧은 추억, 감사, 그리움... 어떤 말이든 좋아요."></textarea>
+      <button onclick="addMessage()" class="button">이야기 남기기</button>
+      <p id="feedback" style="color: green; display: none; text-align:center; margin-top: 10px;">당신의 이야기가 나무에 머물렀습니다.</p>
+    </div>
+
+    <div class="message-list hidden" id="messageList">
+      <!-- 메시지가 여기에 추가됩니다 -->
+    </div>
+  </div>
+
+  <script>
+    function showForm() {
+      document.getElementById("inputArea").classList.remove("hidden");
+      document.getElementById("messageList").classList.add("hidden");
+    }
+    function showMessages() {
+      document.getElementById("messageList").classList.remove("hidden");
+      document.getElementById("inputArea").classList.add("hidden");
+    }
+    function addMessage() {
+      const input = document.getElementById("messageInput");
+      const nickname = document.getElementById("nicknameInput").value.trim();
+      const messageList = document.getElementById("messageList");
+      const feedback = document.getElementById("feedback");
+
+      if (input.value.trim() === "" || nickname === "") return;
+
+      const newMessage = document.createElement("div");
+      newMessage.className = "message";
+
+      const now = new Date();
+      const timestamp = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+
+      newMessage.innerHTML = `<strong>${nickname}</strong>: ${input.value}<span class="timestamp">${timestamp}</span>`;
+      messageList.prepend(newMessage);
+
+      input.value = "";
+      document.getElementById("nicknameInput").value = "";
+      feedback.style.display = "block";
+      setTimeout(() => { feedback.style.display = "none"; }, 3000);
+    }
+  </script>
+</body>
+</html>
